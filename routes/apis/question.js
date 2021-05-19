@@ -1,5 +1,5 @@
 const express = require("express");
-const Question = require("../../../model/Question");
+const Question = require("../../model/Question");
 const router = express.Router();
 
 router.get("/admin/all/question", async (req, res) => {
@@ -36,6 +36,18 @@ router.put("/admin/update/question/:id", async (req, res) => {
         { new: true }
       );
       res.send(updateQuestion);
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+router.delete("/admin/delete/question/:id", async (req, res) => {
+  try {
+    const foundedQuestion = await Question.findById(req.params.id);
+    if (foundedQuestion) {
+      const deleteQuestion = await Question.deleteOne();
+      res.send("Successfully Deleted");
     }
   } catch (error) {
     console.log(error.message);
