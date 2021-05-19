@@ -42,16 +42,4 @@ router.put("/admin/update/question/:id", async (req, res) => {
   }
 });
 
-router.delete("/admin/delete/question/:id", async (req, res) => {
-  try {
-    const foundedQuestion = await Question.findById(req.params.id);
-    if (foundedQuestion) {
-      const deleteQuestion = await Question.deleteOne();
-      res.send("Successfully Deleted");
-    }
-  } catch (error) {
-    console.log(error.message);
-  }
-});
-
 module.exports = router;
