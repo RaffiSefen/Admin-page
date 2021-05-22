@@ -5,6 +5,7 @@ const dotenv = require("dotenv").config();
 
 const app = express();
 
+app.use(express.static("frontend"));
 app.use(express.json());
 app.use("/api", questionRouter);
 connectToDb();
