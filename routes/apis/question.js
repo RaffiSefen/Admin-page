@@ -1,8 +1,9 @@
 const express = require("express");
+const isAdmin = require("../../middleware/auth");
 const Question = require("../../model/Question");
 const router = express.Router();
 
-router.get("/admin/all/question", async (req, res) => {
+router.get("/admin/all/question", isAdmin, async (req, res) => {
   try {
     const allQuestions = await Question.find();
     res.send(allQuestions);
@@ -11,8 +12,9 @@ router.get("/admin/all/question", async (req, res) => {
   }
 });
 
-router.post("/admin/new/question", async (req, res) => {
+router.post("/admin/new/question", isAdmin, async (req, res) => {
   try {
+    console.log(req.body);
     const { title, answer } = req.body;
     const newQuestion = new Question({
       title,
@@ -26,7 +28,7 @@ router.post("/admin/new/question", async (req, res) => {
   }
 });
 
-router.put("/admin/update/question/:id", async (req, res) => {
+router.put("/admin/update/question/:id", isAdmin, async (req, res) => {
   try {
     const foundedQuestion = await Question.findById(req.params.id);
     if (foundedQuestion) {
@@ -42,7 +44,7 @@ router.put("/admin/update/question/:id", async (req, res) => {
   }
 });
 
-router.delete("/admin/delete/question/:id", async (req, res) => {
+router.delete("/admin/delete/question/:id", isAdmin, async (req, res) => {
   try {
     const foundedQuestion = await Question.findById(req.params.id);
     if (foundedQuestion) {
